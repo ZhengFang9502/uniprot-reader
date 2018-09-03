@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.lang.System.out;
-
 /**
  * @author ZhengFang 2018/5/28
  * @since V1.0
@@ -82,7 +80,7 @@ public class UniProtXmlReader {
 			String recommendedFullName = entry.getProtein().getProteinNameGroup().getRecommendedName().getFullName().getValue();
 			String primaryGeneName = "";
 			List<Gene> gene = entry.getGene();
-			if (gene!=null){
+			if (gene != null) {
 				for (GeneName geneName : gene.get(0).getName()) {
 					if (geneName.getType().equals(GeneName.Type.Primary)) {
 						primaryGeneName = geneName.getValue();
@@ -91,47 +89,47 @@ public class UniProtXmlReader {
 			}
 			Organism organism = entry.getOrganism();
 			String scientificName = "";
-			if (organism.getName()!=null){
+			if (organism.getName() != null) {
 				for (OrganismName organismName : organism.getName()) {
 					if (organismName.getType().equals(OrganismName.Type.Scientific)) {
-						scientificName=organismName.getValue();
+						scientificName = organismName.getValue();
 					}
 				}
 			}
-			String taxonomy="";
-			if (organism.getDbReference()!=null){
+			String taxonomy = "";
+			if (organism.getDbReference() != null) {
 				for (DBReference dbReference : organism.getDbReference()) {
-					if (dbReference.getType().contains("Taxonomy")){
-						taxonomy=dbReference.getId();
+					if (dbReference.getType().contains("Taxonomy")) {
+						taxonomy = dbReference.getId();
 					}
 				}
 			}
-			int number=0;
+			int number = 0;
 			ProteinExistence proteinExistence = entry.getProteinExistence();
-			if (proteinExistence!=null){
-				number= proteinExistence.getType().getNumber();
+			if (proteinExistence != null) {
+				number = proteinExistence.getType().getNumber();
 			}
 			Sequence sequence = entry.getSequence();
-			int sequenceVersion= sequence.getVersion();
+			int sequenceVersion = sequence.getVersion();
 			String sequenceValue = sequence.getValue();
-			Protein protein=new Protein();
-			protein.setDataSet(dataset);
+			Protein protein = new Protein();
+			protein.setDatabase(dataset);
 			protein.setAccession(accession);
-			protein.setName(name);
-			protein.setRecommendedFullName(recommendedFullName);
-			protein.setPrimaryGeneName(primaryGeneName);
-			protein.setOrganismScientificName(scientificName);
-			if (!taxonomy.equals("")){
-				protein.setTaxonomy(taxonomy);
+			protein.setEntryName(name);
+			protein.setProteinName(recommendedFullName);
+			protein.setGeneName(primaryGeneName);
+			protein.setOrganismName(scientificName);
+			if (!taxonomy.equals("")) {
+				protein.setOrganismIdentifier(taxonomy);
 			}
-			if (number!=0){
+			if (number != 0) {
 				protein.setProteinExistence(number);
 			}
-			if (sequenceVersion!=0){
+			if (sequenceVersion != 0) {
 				protein.setSequenceVersion(sequenceVersion);
 			}
 			protein.setSequence(sequenceValue);
-			proteinMap.put(accession,protein);
+			proteinMap.put(accession, protein);
 		}
 		return proteinMap;
 	}
