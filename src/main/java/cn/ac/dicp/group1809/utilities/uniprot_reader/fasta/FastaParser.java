@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -19,8 +18,11 @@ import java.util.regex.Pattern;
 public class FastaParser {
 	private Logger logger = LoggerFactory.getLogger(FastaParser.class);
 	private final Pattern propertyPattern = Pattern.compile("(OS|OX|GN|PE|SV)=([\\w\\-]+ )*[\\w\\-]+");
+	private static final FastaParser instance = new FastaParser();
 
-	public static FastaParser instance = new FastaParser();
+	public static FastaParser getInstance() {
+		return instance;
+	}
 
 	private FastaParser() {
 	}

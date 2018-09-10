@@ -24,7 +24,11 @@ import java.util.List;
 public class UniProtXmlReader {
 	private Logger logger = LoggerFactory.getLogger(UniProtXmlReader.class);
 
-	public static UniProtXmlReader instance = new UniProtXmlReader();
+	private static final UniProtXmlReader instance = new UniProtXmlReader();
+
+	public static UniProtXmlReader getInstance(){
+		return instance;
+	}
 
 	private UniProtXmlReader() {
 
