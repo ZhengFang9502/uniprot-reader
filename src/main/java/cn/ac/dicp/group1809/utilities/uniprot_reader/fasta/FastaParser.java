@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,15 +15,23 @@ import java.util.regex.Pattern;
  * @since V1.0
  */
 public class FastaParser {
-	private Logger logger = LoggerFactory.getLogger(FastaParser.class);
-	private final Pattern propertyPattern = Pattern.compile("(OS|OX|GN|PE|SV)=([\\w\\-]+ )*[\\w\\-]+");
 	private static final FastaParser instance = new FastaParser();
+	private final Pattern propertyPattern = Pattern.compile("(OS|OX|GN|PE|SV)=([\\w\\-]+ )*[\\w\\-]+");
+	private Logger logger = LoggerFactory.getLogger(FastaParser.class);
+
+	private FastaParser() {
+	}
 
 	public static FastaParser getInstance() {
 		return instance;
 	}
 
-	private FastaParser() {
+	private static String getDecoySeq(String sequence) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = sequence.length() - 1; i >= 0; i--) {
+			stringBuilder.append(sequence.charAt(i));
+		}
+		return stringBuilder.toString();
 	}
 
 	public HashMap<String, Protein> read(String path) throws IOException {
@@ -47,7 +54,8 @@ public class FastaParser {
 				}
 				protein = new Protein();
 				String[] split = s.split("\\|");
-				protein.setDatabase(split[0].replace(">", ""));
+				String database = split[0].replace(">", "");
+				protein.setDatabase(database);
 				protein.setAccession(split[1]);
 				setProteinAttributes(protein, split[2]);
 				content = new StringBuilder();
@@ -66,13 +74,13 @@ public class FastaParser {
 	private void addProtein(HashMap<String, Protein> proteinDatabase, Protein protein) {
 		String accession = protein.getAccession();
 		if (proteinDatabase.containsKey(accession)) {
-			logger.error("Failed to add protein to the protein database, cause duplicate accession number happens in the fasta file");
-			throw new IllegalArgumentException("Duplicate protein accession is forbidden!");
+			logger.error("Duplicate accession number in the fasta file with different sequence.");
+			throw new IllegalArgumentException("Duplicate accession number in the fasta file with different sequence.");
 		}
 		proteinDatabase.put(accession, protein);
 	}
 
-	private void setProteinAttributes(Protein protein, String description) {
+	public void setProteinAttributes(Protein protein, String description) {
 		Matcher matcher = propertyPattern.matcher(description);
 		while (matcher.find()) {
 			String group = matcher.group();
@@ -116,8 +124,7 @@ public class FastaParser {
 		File file = new File(outputPath);
 		FileWriter writer = new FileWriter(file);
 		StringBuilder stringBuilder = new StringBuilder();
-		TreeSet<String> accessions = new TreeSet<>(proteinMap.keySet());
-		for (String accession : accessions) {
+		for (String accession : proteinMap.keySet()) {
 			Protein protein = proteinMap.get(accession);
 			stringBuilder.append(protein).append(System.lineSeparator());
 		}

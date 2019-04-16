@@ -4,8 +4,8 @@
     <option name="MAX_HEAP_SIZE" value="1024" />
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="FlexCompilerConfiguration">
-    <option name="HEAP_SIZE_MB" value="1024" />
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
