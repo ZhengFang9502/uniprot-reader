@@ -24,17 +24,10 @@ import java.util.List;
 public class UniProtXmlReader {
 	private Logger logger = LoggerFactory.getLogger(UniProtXmlReader.class);
 
-	private static final UniProtXmlReader instance = new UniProtXmlReader();
-
-	public static UniProtXmlReader getInstance(){
-		return instance;
+	public UniProtXmlReader() {
 	}
 
-	private UniProtXmlReader() {
-
-	}
-
-	public Uniprot read(String path) throws FileNotFoundException, XMLStreamException {
+	public Uniprot read(String path) {
 		if (!path.endsWith("xml")) {
 			logger.error("Failed to read UniProt xml file, cause invalid file format: " + path);
 			throw new IllegalArgumentException("Invalid file format: " + path);
@@ -43,39 +36,63 @@ public class UniProtXmlReader {
 		Uniprot uniprot = new Uniprot();
 		List<Entry> entry = new ArrayList<>();
 		XMLInputFactory factory = XMLInputFactory.newInstance();
-		FileInputStream inputStream = new FileInputStream(new File(path));
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(new File(path));
+		} catch (FileNotFoundException e) {
+			logger.error("File Not Found!");
+			logger.error(e.getMessage());
+			throw new IllegalArgumentException(e.getMessage());
+		}
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-		XMLStreamReader reader = factory.createXMLStreamReader(inputStreamReader);
-		String localName;
-		l1:
-		while (reader.hasNext()) {
-			int next = reader.next();
-			switch (next) {
-				case XMLStreamReader.START_ELEMENT:
-					localName = reader.getLocalName();
-					switch (localName) {
-						case "entry":
-							Entry read = EntryReader.read(reader);
-							entry.add(read);
-							uniprot.setEntry(entry);
-							break;
-						case "copyright":
-							String elementText = reader.getElementText();
-							uniprot.setCopyright(elementText);
-							break;
-					}
-					break;
-				case XMLStreamConstants.END_ELEMENT:
-					localName = reader.getLocalName();
-					if ("uniprot".equals(localName)) {
-						break l1;
-					}
+		XMLStreamReader reader;
+		try {
+			reader = factory.createXMLStreamReader(inputStreamReader);
+		} catch (XMLStreamException e) {
+			logger.error(e.getMessage());
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		try {
+			String localName;
+			l1:
+			while (reader.hasNext()) {
+				int next = reader.next();
+				switch (next) {
+					case XMLStreamReader.START_ELEMENT:
+						localName = reader.getLocalName();
+						switch (localName) {
+							case "entry":
+								Entry read = EntryReader.read(reader);
+								entry.add(read);
+								uniprot.setEntry(entry);
+								break;
+							case "copyright":
+								String elementText = reader.getElementText();
+								uniprot.setCopyright(elementText);
+								break;
+						}
+						break;
+					case XMLStreamConstants.END_ELEMENT:
+						localName = reader.getLocalName();
+						if ("uniprot".equals(localName)) {
+							break l1;
+						}
+				}
+			}
+		} catch (XMLStreamException e) {
+			logger.error(e.getMessage());
+			throw new IllegalArgumentException(e.getMessage());
+		} finally {
+			try {
+				reader.close();
+			} catch (XMLStreamException e) {
+				e.printStackTrace();
 			}
 		}
 		return uniprot;
 	}
 
-	public HashMap<String, Protein> parse(Uniprot uniprot) {
+	public HashMap<String, Protein> getProteinMap(Uniprot uniprot) {
 		HashMap<String, Protein> proteinMap = new HashMap<>();
 		for (Entry entry : uniprot.getEntry()) {
 			String accession = entry.getAccession().get(0);

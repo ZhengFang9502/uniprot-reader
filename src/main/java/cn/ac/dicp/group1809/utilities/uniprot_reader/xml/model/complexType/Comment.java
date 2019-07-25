@@ -213,41 +213,49 @@ import java.util.List;
 public class Comment {
 	private static Logger logger = LoggerFactory.getLogger(Comment.class);
 	@XmlElement
-	private Molecule molecule ;
+	private Molecule molecule;
 	@XmlElement
-	private BpcComment bpcComment ;
+	private BpcComment bpcComment;
+
+	/**
+	 * Used in 'catalytic activity' annotations.
+	 */
+	@XmlElement
+	private List<Reaction> reaction;
+	@XmlElement
+	private List<PhysiologicalReaction> physiologicalReaction;
 	/**
 	 * Used in 'cofactor' annotations.
 	 */
 	@XmlElement
-	private List<Cofactor> cofactor ;
+	private List<Cofactor> cofactor;
 	/**
 	 * Used in 'subcellular location' annotations.
 	 */
 	@XmlElement
-	private List<SubcellularLocation> subcellularLocation ;
+	private List<SubcellularLocation> subcellularLocation;
 	/**
 	 * Used in 'sequence caution' annotations.
 	 */
 	@XmlElement
-	private Conflict conflict ;
+	private Conflict conflict;
 	/**
 	 * Used in 'online information' annotations.
 	 */
 	@XmlElement
-	private List<Link> link ;
+	private List<Link> link;
 	/**
 	 * Used in 'alternative products' annotations.
 	 */
 	@XmlElement
-	private List<Event> event ;
+	private List<Event> event;
 	@XmlElement
-	private List<Isoform> isoform ;
+	private List<Isoform> isoform;
 	/**
 	 * Used in 'interaction' annotations.
 	 */
 	@XmlElement
-	private List<Interactant> interactant ;
+	private List<Interactant> interactant;
 	@XmlElement
 	private boolean organismsDiffer = false;
 	@XmlElement
@@ -256,7 +264,7 @@ public class Comment {
 	 * Used in 'disease' annotations.
 	 */
 	@XmlElement
-	private Disease disease ;
+	private Disease disease;
 
 	/**
 	 * Used in 'mass spectrometry' and 'sequence caution' annotations.
@@ -315,6 +323,22 @@ public class Comment {
 
 	public void setBpcComment(BpcComment bpcComment) {
 		this.bpcComment = bpcComment;
+	}
+
+	public List<Reaction> getReaction() {
+		return reaction;
+	}
+
+	public void setReaction(List<Reaction> reaction) {
+		this.reaction = reaction;
+	}
+
+	public List<PhysiologicalReaction> getPhysiologicalReaction() {
+		return physiologicalReaction;
+	}
+
+	public void setPhysiologicalReaction(List<PhysiologicalReaction> physiologicalReaction) {
+		this.physiologicalReaction = physiologicalReaction;
 	}
 
 	public List<Cofactor> getCofactor() {
@@ -481,7 +505,7 @@ public class Comment {
 		Disease("disease"),
 		Domain("domain"),
 		DisruptionPhenotype("disruption phenotype"),
-		EnzymeRegulation("enzyme regulation"),
+		ActivityRegulation("activity regulation"),
 		Function("function"),
 		Induction("induction"),
 		Miscellaneous("miscellaneous"),
@@ -505,10 +529,6 @@ public class Comment {
 			this.type = type;
 		}
 
-		public String getType() {
-			return type;
-		}
-
 		public static Type forType(String s) {
 			for (Type type : Type.values()) {
 				if (type.getType().equals(s)) {
@@ -517,6 +537,10 @@ public class Comment {
 			}
 			logger.error("Invalid comment type: " + s);
 			throw new IllegalArgumentException("Invalid comment type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 }

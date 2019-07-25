@@ -60,6 +60,8 @@ class CommentReader {
 		}
 
 		BpcComment bpcComment = new BpcComment();
+		List<Reaction> reaction = new ArrayList<>();
+		List<PhysiologicalReaction> physiologicalReaction = new ArrayList<>();
 		List<Cofactor> cofactor = new ArrayList<>();
 		List<SubcellularLocation> subcellularLocation = new ArrayList<>();
 		List<Link> link = new ArrayList<>();
@@ -109,6 +111,14 @@ class CommentReader {
 							readText(reader, temperatureDependence);
 							bpcComment.setTemperatureDependence(temperatureDependence);
 							comment.setBpcComment(bpcComment);
+							break;
+						case "reaction":
+							reaction.add(readReaction(reader));
+							comment.setReaction(reaction);
+							break;
+						case "physiologicalReaction":
+							physiologicalReaction.add(readPhysiologicalReaction(reader));
+							comment.setPhysiologicalReaction(physiologicalReaction);
 							break;
 						case "cofactor":
 							cofactor.add(readCofactor(reader));
@@ -282,6 +292,114 @@ class CommentReader {
 					}
 			}
 		}
+	}
+
+	private static Reaction readReaction(XMLStreamReader reader) throws XMLStreamException {
+		String name = reader.getLocalName();
+		Reaction reaction = new Reaction();
+		int attributeCount = reader.getAttributeCount();
+		int i = 0;
+		while (i < attributeCount) {
+			String attributeLocalName = reader.getAttributeLocalName(i);
+			String attributeValue = reader.getAttributeValue(i);
+			if ("evidence".equals(attributeLocalName)) {
+				List<Integer> evidence = new ArrayList<>();
+				String[] evidences = attributeValue.split(" ");
+				for (String evi : evidences) {
+					evidence.add(Integer.parseInt(evi));
+				}
+				reaction.setEvidence(evidence);
+			} else {
+				logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			}
+			i++;
+		}
+		String localName;
+		loop:
+		while (reader.hasNext()) {
+			int next = reader.next();
+			switch (next) {
+				case XMLStreamReader.START_ELEMENT:
+					localName = reader.getLocalName();
+					switch (localName) {
+						case "text":
+							String text = reader.getElementText();
+							reaction.setText(text);
+							break;
+						case "dbReference":
+							List<DBReference> dbReference = reaction.getDbReference();
+							DBReference dbRef = DBReferenceReader.read(reader);
+							dbReference.add(dbRef);
+							break;
+						default:
+							logger.error("Failed to recognize the element local name: " + localName);
+							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					}
+					break;
+				case XMLStreamConstants.END_ELEMENT:
+					localName = reader.getLocalName();
+					if (name.equals(localName)) {
+						break loop;
+					}
+			}
+		}
+		return reaction;
+	}
+
+	private static PhysiologicalReaction readPhysiologicalReaction(XMLStreamReader reader) throws XMLStreamException {
+		String name = reader.getLocalName();
+		PhysiologicalReaction physiologicalReaction = new PhysiologicalReaction();
+		int attributeCount = reader.getAttributeCount();
+		int i = 0;
+		while (i < attributeCount) {
+			String attributeLocalName = reader.getAttributeLocalName(i);
+			String attributeValue = reader.getAttributeValue(i);
+			switch (attributeLocalName) {
+				case "evidence":
+					List<Integer> evidence = new ArrayList<>();
+					String[] evidences = attributeValue.split(" ");
+					for (String evi : evidences) {
+						evidence.add(Integer.parseInt(evi));
+					}
+					physiologicalReaction.setEvidence(evidence);
+					break;
+				case "direction":
+					PhysiologicalReaction.Direction direction = PhysiologicalReaction.Direction.forDirection(attributeValue);
+					physiologicalReaction.setDirection(direction);
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+
+			}
+			i++;
+		}
+		String localName;
+		loop:
+		while (reader.hasNext()) {
+			int next = reader.next();
+			switch (next) {
+				case XMLStreamReader.START_ELEMENT:
+					localName = reader.getLocalName();
+					switch (localName) {
+						case "dbReference":
+							List<DBReference> dbReference = physiologicalReaction.getDbReference();
+							DBReference dbRef = DBReferenceReader.read(reader);
+							dbReference.add(dbRef);
+							break;
+						default:
+							logger.error("Failed to recognize the element local name: " + localName);
+							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					}
+					break;
+				case XMLStreamConstants.END_ELEMENT:
+					localName = reader.getLocalName();
+					if (name.equals(localName)) {
+						break loop;
+					}
+			}
+		}
+		return physiologicalReaction;
 	}
 
 	private static Cofactor readCofactor(XMLStreamReader reader) throws XMLStreamException {
