@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -34,11 +32,10 @@ import java.util.List;
  * @since V1.0
  */
 public class Position {
-	private static Logger logger = LoggerFactory.getLogger(Position.class);
 	@XmlAttribute
 	private long position;
 	@XmlAttribute
-	private Status status=Status.Certain;
+	private Status status = Status.CERTAIN;
 	@XmlAttribute
 	@XmlJavaTypeAdapter(IntListAdapter.class)
 	private List<Integer> evidence;
@@ -68,20 +65,16 @@ public class Position {
 	}
 
 	public enum Status {
-		Certain("certain"),
-		Uncertain("uncertain"),
-		LessThan("less than"),
-		GreaterThan("greater than"),
-		Unknown("unknown");
+		CERTAIN("certain"),
+		UNCERTAIN("uncertain"),
+		LESS_THAN("less than"),
+		GREATER_THAN("greater than"),
+		UNKNOWN("unknown");
 
 		private String status;
 
 		Status(String type) {
 			this.status = type;
-		}
-
-		public String getStatus() {
-			return status;
 		}
 
 		public static Status forStatus(String s) {
@@ -90,8 +83,11 @@ public class Position {
 					return status;
 				}
 			}
-			logger.error("Invalid position status: " + s);
 			throw new IllegalArgumentException("Invalid position status: " + s);
+		}
+
+		public String getStatus() {
+			return status;
 		}
 	}
 

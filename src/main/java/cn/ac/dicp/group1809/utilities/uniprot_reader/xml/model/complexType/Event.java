@@ -1,8 +1,5 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -30,7 +27,6 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @since V1.0
  */
 public class Event {
-	private static Logger logger = LoggerFactory.getLogger(Event.class);
 	@XmlAttribute(required = true)
 	private Type type;
 
@@ -43,18 +39,14 @@ public class Event {
 	}
 
 	public enum Type {
-		AlternativeSplicing("alternative splicing"),
-		AlternativeInitiation("alternative initiation"),
-		AlternativePromoter("alternative promoter"),
-		RibosomalFrameshifting("ribosomal frameshifting");
+		ALTERNATIVE_SPLICING("alternative splicing"),
+		ALTERNATIVE_INITIATION("alternative initiation"),
+		ALTERNATIVE_PROMOTER("alternative promoter"),
+		RIBOSOMAL_FRAMESHIFTING("ribosomal frameshifting");
 		private String type;
 
 		Type(String type) {
 			this.type = type;
-		}
-
-		public String getType() {
-			return type;
 		}
 
 		public static Type forType(String s) {
@@ -63,8 +55,11 @@ public class Event {
 					return type;
 				}
 			}
-			logger.error("Invalid event type: " + s);
 			throw new IllegalArgumentException("Invalid event type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 

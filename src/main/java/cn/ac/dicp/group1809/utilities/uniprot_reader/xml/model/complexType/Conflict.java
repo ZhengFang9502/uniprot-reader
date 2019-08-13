@@ -1,8 +1,5 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
@@ -15,7 +12,6 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "conflict")
 public class Conflict {
-	private static Logger logger = LoggerFactory.getLogger(Conflict.class);
 	@XmlElement
 	private Sequence sequence;
 
@@ -51,6 +47,56 @@ public class Conflict {
 		this.ref = ref;
 	}
 
+	public enum Resource {
+		EMBL_CDS("EMBL-CDS"),
+		EMBL("EMBL");
+		private String resource;
+
+		Resource(String resource) {
+			this.resource = resource;
+		}
+
+		public static Resource forResource(String s) {
+			for (Resource resource : Resource.values()) {
+				if (resource.getResource().equals(s)) {
+					return resource;
+				}
+			}
+			throw new IllegalArgumentException("Invalid sequence resource: " + s);
+		}
+
+		public String getResource() {
+			return resource;
+		}
+	}
+
+	public enum Type {
+		FRAMESHIFT("frameshift"),
+		ERRONEOUS_INITIATION("erroneous initiation"),
+		ERRONEOUS_TERMINATION("erroneous termination"),
+		ERRONEOUS_GENE_MODEL_PREDICTION("erroneous gene model prediction"),
+		ERRONEOUS_TRANSLATION("erroneous translation"),
+		MISCELLANEOUS_DISCREPANCY("miscellaneous discrepancy");
+		private String type;
+
+		Type(String type) {
+			this.type = type;
+		}
+
+		public static Type forType(String s) {
+			for (Type type : Type.values()) {
+				if (type.getType().equals(s)) {
+					return type;
+				}
+			}
+			throw new IllegalArgumentException("Invalid conflict type: " + s);
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
+
 	public static class Sequence {
 		@XmlAttribute
 		private Resource resource;
@@ -81,58 +127,6 @@ public class Conflict {
 
 		public void setVersion(int version) {
 			this.version = version;
-		}
-	}
-
-	public enum Resource {
-		EMBL_CDS("EMBL-CDS"),
-		EMBL("EMBL");
-		private String resource;
-
-		Resource(String resource) {
-			this.resource = resource;
-		}
-
-		public String getResource() {
-			return resource;
-		}
-
-		public static Resource forResource(String s) {
-			for (Resource resource : Resource.values()) {
-				if (resource.getResource().equals(s)) {
-					return resource;
-				}
-			}
-			logger.error("Invalid sequence resource: " + s);
-			throw new IllegalArgumentException("Invalid sequence resource: " + s);
-		}
-	}
-
-	public enum Type {
-		Frameshift("frameshift"),
-		ErroneousInitiation("erroneous initiation"),
-		ErroneousTermination("erroneous termination"),
-		ErroneousGeneModelPrediction("erroneous gene model prediction"),
-		ErroneousTranslation("erroneous translation"),
-		MiscellaneousDiscrepancy("miscellaneous discrepancy");
-		private String type;
-
-		Type(String type) {
-			this.type = type;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public static Type forType(String s) {
-			for (Type type : Type.values()) {
-				if (type.getType().equals(s)) {
-					return type;
-				}
-			}
-			logger.error("Invalid conflict type: " + s);
-			throw new IllegalArgumentException("Invalid conflict type: " + s);
 		}
 	}
 }

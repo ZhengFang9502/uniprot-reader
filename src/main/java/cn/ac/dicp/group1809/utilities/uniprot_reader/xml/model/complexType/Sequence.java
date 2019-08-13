@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -35,7 +33,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @since V1.0
  */
 public class Sequence extends ValueItem {
-	private static Logger logger = LoggerFactory.getLogger(Sequence.class);
 	@XmlAttribute(required = true)
 	private int length;
 	@XmlAttribute(required = true)
@@ -109,17 +106,13 @@ public class Sequence extends ValueItem {
 	}
 
 	public enum Fragment {
-		Single("single"),
-		Multiple("multiple");
+		SINGLE("single"),
+		MULTIPLE("multiple");
 
 		private String type;
 
 		Fragment(String fragment) {
 			this.type = fragment;
-		}
-
-		public String getFragment() {
-			return type;
 		}
 
 		public static Fragment forFragment(String s) {
@@ -128,8 +121,11 @@ public class Sequence extends ValueItem {
 					return fragment;
 				}
 			}
-			logger.error("Invalid fragment: " + s);
 			throw new IllegalArgumentException("Invalid fragment: " + s);
+		}
+
+		public String getFragment() {
+			return type;
 		}
 	}
 

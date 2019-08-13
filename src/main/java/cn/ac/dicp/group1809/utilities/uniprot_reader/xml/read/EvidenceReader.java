@@ -4,8 +4,6 @@ import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.DBRef
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Evidence;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.ImportedFrom;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Source;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -16,8 +14,6 @@ import javax.xml.stream.XMLStreamReader;
  * @since V1.0
  */
 class EvidenceReader {
-	private static Logger logger = LoggerFactory.getLogger(EvidenceReader.class);
-
 	static Evidence read(XMLStreamReader reader) throws XMLStreamException {
 		String name = reader.getLocalName();
 		Evidence evidence = new Evidence();
@@ -34,7 +30,6 @@ class EvidenceReader {
 					evidence.setKey(Integer.valueOf(attributeValue));
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
@@ -57,7 +52,6 @@ class EvidenceReader {
 							evidence.setImportedFrom(importedFrom);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -66,6 +60,8 @@ class EvidenceReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return evidence;
@@ -79,13 +75,10 @@ class EvidenceReader {
 		while (i < attributeCount) {
 			String attributeLocalName = reader.getAttributeLocalName(i);
 			String attributeValue = reader.getAttributeValue(i);
-			switch (attributeLocalName) {
-				case "ref":
-					source.setRef(Integer.valueOf(attributeValue));
-					break;
-				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			if ("ref".equals(attributeLocalName)) {
+				source.setRef(Integer.valueOf(attributeValue));
+			} else {
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -96,14 +89,11 @@ class EvidenceReader {
 			switch (next) {
 				case XMLStreamReader.START_ELEMENT:
 					localName = reader.getLocalName();
-					switch (localName) {
-						case "dbReference":
-							DBReference dbReference = DBReferenceReader.read(reader);
-							source.setDbReference(dbReference);
-							break;
-						default:
-							logger.error("Failed to recognize the element local name: " + localName);
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					if ("dbReference".equals(localName)) {
+						DBReference dbReference = DBReferenceReader.read(reader);
+						source.setDbReference(dbReference);
+					} else {
+						throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -111,6 +101,8 @@ class EvidenceReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return source;
@@ -126,14 +118,11 @@ class EvidenceReader {
 			switch (next) {
 				case XMLStreamReader.START_ELEMENT:
 					localName = reader.getLocalName();
-					switch (localName) {
-						case "dbReference":
-							DBReference dbReference = DBReferenceReader.read(reader);
-							importedFrom.setDbReference(dbReference);
-							break;
-						default:
-							logger.error("Failed to recognize the element local name: " + localName);
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					if ("dbReference".equals(localName)) {
+						DBReference dbReference = DBReferenceReader.read(reader);
+						importedFrom.setDbReference(dbReference);
+					} else {
+						throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -141,6 +130,8 @@ class EvidenceReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return importedFrom;

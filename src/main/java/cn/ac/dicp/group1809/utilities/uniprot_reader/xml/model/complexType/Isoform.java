@@ -1,12 +1,9 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
 
@@ -53,7 +50,6 @@ import java.util.List;
  * @since V1.0
  */
 public class Isoform {
-	private static Logger logger = LoggerFactory.getLogger(Isoform.class);
 	@XmlElement
 	private List<String> id;
 	@XmlElement
@@ -95,6 +91,31 @@ public class Isoform {
 		this.text = text;
 	}
 
+	public enum Type {
+		NOT_DESCRIBED("not described"),
+		DESCRIBED("described"),
+		DISPLAYED("displayed"),
+		EXTERNAL("external");
+		private String type;
+
+		Type(String type) {
+			this.type = type;
+		}
+
+		public static Type forType(String s) {
+			for (Type type : Type.values()) {
+				if (type.getType().equals(s)) {
+					return type;
+				}
+			}
+			throw new IllegalArgumentException("Invalid isoform type: " + s);
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
+
 	public static class Name extends ValueItem {
 
 		@XmlAttribute
@@ -132,32 +153,6 @@ public class Isoform {
 
 		public void setRef(String ref) {
 			this.ref = ref;
-		}
-	}
-
-	public enum Type {
-		NotDescribed("not described"),
-		Described("described"),
-		Displayed("displayed"),
-		External("external");
-		private String type;
-
-		Type(String type) {
-			this.type = type;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public static Type forType(String s) {
-			for (Type type : Type.values()) {
-				if (type.getType().equals(s)) {
-					return type;
-				}
-			}
-			logger.error("Invalid isoform type: " + s);
-			throw new IllegalArgumentException("Invalid isoform type: " + s);
 		}
 	}
 }

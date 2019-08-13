@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -137,7 +135,6 @@ import java.util.List;
 		"dbReference",
 })
 public class Citation {
-	private static Logger logger = LoggerFactory.getLogger(Citation.class);
 	/**
 	 * Describes the title of a citation.
 	 * Equivalent to the flat file RT-line.
@@ -370,22 +367,18 @@ public class Citation {
 	 * @since V1.0
 	 */
 	public enum Type {
-		Book("book"),
-		JournalArticle("journal article"),
-		OnlineJournalArticle("online journal article"),
-		Patent("patent"),
-		Submission("submission"),
-		Thesis("thesis"),
-		UnpublishedObservations("unpublished observations");
+		BOOK("book"),
+		JOURNAL_ARTICLE("journal article"),
+		ONLINE_JOURNAL_ARTICLE("online journal article"),
+		PATENT("patent"),
+		SUBMISSION("submission"),
+		THESIS("thesis"),
+		UNPUBLISHED_OBSERVATIONS("unpublished observations");
 
 		private String type;
 
 		Type(String type) {
 			this.type = type;
-		}
-
-		public String getType() {
-			return type;
 		}
 
 		public static Type forType(String s) {
@@ -394,8 +387,11 @@ public class Citation {
 					return type;
 				}
 			}
-			logger.error("Invalid citation type: " + s);
 			throw new IllegalArgumentException("Invalid citation type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 }

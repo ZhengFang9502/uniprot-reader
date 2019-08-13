@@ -2,8 +2,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Sequence;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -13,7 +11,6 @@ import javax.xml.stream.XMLStreamReader;
  * @since V1.0
  */
 class SequenceReader {
-	private static Logger logger = LoggerFactory.getLogger(SequenceReader.class);
 	private static DateAdapter dateAdapter = new DateAdapter();
 
 	static Sequence read(XMLStreamReader reader) throws XMLStreamException {
@@ -48,7 +45,6 @@ class SequenceReader {
 					sequence.setFragment(fragment);
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName + "\t" + attributeValue);
 			}
 			i++;

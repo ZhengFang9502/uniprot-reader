@@ -6,8 +6,6 @@ import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.*;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.sourceData.SourceData;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.sourceData.SourceDataInf;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.group.sptrCitationGroup.SptrCitation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -20,7 +18,6 @@ import java.util.List;
  * @since V1.0
  */
 class ReferenceReader {
-	private static Logger logger = LoggerFactory.getLogger(ReferenceReader.class);
 	private static DateAdapter dateAdapter = new DateAdapter();
 
 	static Reference read(XMLStreamReader reader) throws XMLStreamException {
@@ -43,7 +40,6 @@ class ReferenceReader {
 					reference.setKey(attributeValue);
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
@@ -71,7 +67,6 @@ class ReferenceReader {
 							sptrCitation.setSource(sourceData);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -80,6 +75,8 @@ class ReferenceReader {
 					if ("reference".equals(endName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		reference.setSptrCitation(sptrCitation);
@@ -135,7 +132,6 @@ class ReferenceReader {
 					citation.setCountry(attributeValue);
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
@@ -164,14 +160,13 @@ class ReferenceReader {
 							break;
 						case "locator":
 							String locator = reader.getElementText();
-							citation.setTitle(locator);
+							citation.setLocator(locator);
 							break;
 						case "dbReference":
 							dbReference.add(DBReferenceReader.read(reader));
 							citation.setDbReference(dbReference);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -180,6 +175,8 @@ class ReferenceReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return citation;
@@ -212,7 +209,6 @@ class ReferenceReader {
 							nameList.setConsortium(consortium);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -221,6 +217,8 @@ class ReferenceReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return nameList;
@@ -232,13 +230,10 @@ class ReferenceReader {
 		while (i < attributeCount) {
 			String attributeLocalName = reader.getAttributeLocalName(i);
 			String attributeValue = reader.getAttributeValue(i);
-			switch (attributeLocalName) {
-				case "name":
-					nameInf.setName(attributeValue);
-					break;
-				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			if ("name".equals(attributeLocalName)) {
+				nameInf.setName(attributeValue);
+			} else {
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -277,7 +272,6 @@ class ReferenceReader {
 							sourceData.setSourceData(sourceDataInf);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -286,6 +280,8 @@ class ReferenceReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return sourceData;
@@ -298,14 +294,11 @@ class ReferenceReader {
 		while (i < attributeCount) {
 			String attributeLocalName = reader.getAttributeLocalName(i);
 			String attributeValue = reader.getAttributeValue(i);
-			switch (attributeLocalName) {
-				case "evidence":
-					List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
-					sourceDataInf.setEvidence(unmarshal);
-					break;
-				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			if ("evidence".equals(attributeLocalName)) {
+				List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
+				sourceDataInf.setEvidence(unmarshal);
+			} else {
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}

@@ -4,8 +4,6 @@ import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAd
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.DBReference;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Organism;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.OrganismName;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -18,8 +16,6 @@ import java.util.List;
  * @since V1.0
  */
 class OrganismReader {
-	private static Logger logger = LoggerFactory.getLogger(OrganismReader.class);
-
 	static Organism read(XMLStreamReader reader) throws XMLStreamException {
 		String name = reader.getLocalName();
 		Organism organism = new Organism();
@@ -28,14 +24,11 @@ class OrganismReader {
 		while (i < attributeCount) {
 			String attributeLocalName = reader.getAttributeLocalName(i);
 			String attributeValue = reader.getAttributeValue(i);
-			switch (attributeLocalName) {
-				case "evidence":
-					List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
-					organism.setEvidence(unmarshal);
-					break;
-				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			if ("evidence".equals(attributeLocalName)) {
+				List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
+				organism.setEvidence(unmarshal);
+			} else {
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -63,7 +56,6 @@ class OrganismReader {
 							organism.setLineage(lineage);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -72,6 +64,8 @@ class OrganismReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return organism;
@@ -85,14 +79,11 @@ class OrganismReader {
 		while (i < attributeCount) {
 			String attributeLocalName = reader.getAttributeLocalName(i);
 			String attributeValue = reader.getAttributeValue(i);
-			switch (attributeLocalName) {
-				case "type":
-					OrganismName.Type organismNameType = OrganismName.Type.forType(attributeValue);
-					organismName.setType(organismNameType);
-					break;
-				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			if ("type".equals(attributeLocalName)) {
+				OrganismName.Type organismNameType = OrganismName.Type.forType(attributeValue);
+				organismName.setType(organismNameType);
+			} else {
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -111,15 +102,12 @@ class OrganismReader {
 			switch (next) {
 				case XMLStreamReader.START_ELEMENT:
 					localName = reader.getLocalName();
-					switch (localName) {
-						case "taxon":
-							Organism.Taxon taxon = new Organism.Taxon();
-							taxon.setTaxon(reader.getElementText());
-							lineage.add(taxon);
-							break;
-						default:
-							logger.error("Failed to recognize the element local name: " + localName);
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					if ("taxon".equals(localName)) {
+						Organism.Taxon taxon = new Organism.Taxon();
+						taxon.setTaxon(reader.getElementText());
+						lineage.add(taxon);
+					} else {
+						throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -127,6 +115,8 @@ class OrganismReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return lineage;

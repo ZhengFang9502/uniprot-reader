@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -32,7 +30,6 @@ import java.util.List;
  * @since V1.0
  */
 public class EvidencedString extends ValueItem {
-	private static Logger logger = LoggerFactory.getLogger(EvidencedString.class);
 	@XmlAttribute
 	@XmlJavaTypeAdapter(IntListAdapter.class)
 	private List<Integer> evidence;
@@ -56,18 +53,14 @@ public class EvidencedString extends ValueItem {
 	}
 
 	public enum Status {
-		BySimilarity("by similarity"),
-		Probable("probable"),
-		Potential("potential");
+		BY_SIMILARITY("by similarity"),
+		PROBABLE("probable"),
+		POTENTIAL("potential");
 
 		private String status;
 
 		Status(String status) {
 			this.status = status;
-		}
-
-		public String getStatus() {
-			return status;
 		}
 
 		public static Status forStatus(String s) {
@@ -76,8 +69,11 @@ public class EvidencedString extends ValueItem {
 					return status;
 				}
 			}
-			logger.error("Invalid evidenced string status: " + s);
 			throw new IllegalArgumentException("Invalid evidenced string status: " + s);
+		}
+
+		public String getStatus() {
+			return status;
 		}
 	}
 }

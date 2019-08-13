@@ -1,8 +1,5 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
@@ -37,7 +34,6 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "name")
 public class OrganismName extends ValueItem {
-	private static Logger logger = LoggerFactory.getLogger(OrganismName.class);
 	@XmlAttribute(required = true)
 	private Type type;
 
@@ -50,20 +46,16 @@ public class OrganismName extends ValueItem {
 	}
 
 	public enum Type {
-		Common("common"),
-		Full("full"),
-		Scientific("scientific"),
-		Synonym("synonym"),
-		Abbreviation("abbreviation");
+		COMMON("common"),
+		FULL("full"),
+		SCIENTIFIC("scientific"),
+		SYNONYM("synonym"),
+		ABBREVIATION("abbreviation");
 
 		private String type;
 
 		Type(String type) {
 			this.type = type;
-		}
-
-		public String getType() {
-			return type;
 		}
 
 		public static Type forType(String s) {
@@ -72,8 +64,11 @@ public class OrganismName extends ValueItem {
 					return type;
 				}
 			}
-			logger.error("Invalid organism name type: " + s);
 			throw new IllegalArgumentException("Invalid organism name type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 }

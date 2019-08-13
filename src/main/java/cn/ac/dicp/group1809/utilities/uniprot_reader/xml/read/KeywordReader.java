@@ -2,8 +2,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Keyword;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -14,8 +12,6 @@ import java.util.List;
  * @since V1.0
  */
 class KeywordReader {
-	private static Logger logger = LoggerFactory.getLogger(KeywordReader.class);
-
 	static Keyword read(XMLStreamReader reader) throws XMLStreamException {
 		Keyword keyword = new Keyword();
 		int attributeCount = reader.getAttributeCount();
@@ -32,7 +28,6 @@ class KeywordReader {
 					keyword.setId(attributeValue);
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;

@@ -3,8 +3,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.GeneLocation;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Status;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -17,8 +15,6 @@ import java.util.List;
  * @since V1.0
  */
 class GeneLocationReader {
-	private static Logger logger = LoggerFactory.getLogger(GeneLocationReader.class);
-
 	static GeneLocation read(XMLStreamReader reader) throws XMLStreamException {
 		String name = reader.getLocalName();
 		GeneLocation geneLocation = new GeneLocation();
@@ -37,7 +33,6 @@ class GeneLocationReader {
 					geneLocation.setEvidence(unmarshal);
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
@@ -50,14 +45,11 @@ class GeneLocationReader {
 			switch (next) {
 				case XMLStreamReader.START_ELEMENT:
 					localName = reader.getLocalName();
-					switch (localName) {
-						case "name":
-							statuses.add(readStatus(reader));
-							geneLocation.setName(statuses);
-							break;
-						default:
-							logger.error("Failed to recognize the element local name: " + localName);
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					if ("name".equals(localName)) {
+						statuses.add(readStatus(reader));
+						geneLocation.setName(statuses);
+					} else {
+						throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -65,6 +57,8 @@ class GeneLocationReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return geneLocation;
@@ -77,14 +71,11 @@ class GeneLocationReader {
 		while (i < attributeCount) {
 			String attributeLocalName = reader.getAttributeLocalName(i);
 			String attributeValue = reader.getAttributeValue(i);
-			switch (attributeLocalName) {
-				case "status":
-					Status.Type type = Status.Type.forType(attributeValue);
-					status.setStatus(type);
-					break;
-				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+			if ("status".equals(attributeLocalName)) {
+				Status.Type type = Status.Type.forType(attributeValue);
+				status.setStatus(type);
+			} else {
+				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}

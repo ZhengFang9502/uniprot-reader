@@ -63,8 +63,8 @@ public class PhysiologicalReaction {
 	}
 
 	public enum Direction {
-		leftToRight("left-to-right"),
-		rightToLeft("right-to-left");
+		LEFT_TO_RIGHT("left-to-right"),
+		RIGHT_TO_LEFT("right-to-left");
 		private String direction;
 
 		Direction(String direction) {

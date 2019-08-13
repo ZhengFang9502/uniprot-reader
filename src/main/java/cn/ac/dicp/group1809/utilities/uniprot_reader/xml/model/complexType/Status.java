@@ -1,8 +1,5 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -32,7 +29,6 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @since V1.0
  */
 public class Status extends ValueItem {
-	private static Logger logger = LoggerFactory.getLogger(Status.class);
 	@XmlAttribute
 	private Type status;
 
@@ -45,16 +41,12 @@ public class Status extends ValueItem {
 	}
 
 	public enum Type {
-		Known("known"),
-		Unknown("unknown");
+		KNOWN("known"),
+		UNKNOWN("unknown");
 		private String type;
 
 		Type(String type) {
 			this.type = type;
-		}
-
-		public String getType() {
-			return type;
 		}
 
 		public static Type forType(String s) {
@@ -63,8 +55,11 @@ public class Status extends ValueItem {
 					return type;
 				}
 			}
-			logger.error("Invalid statue type: " + s);
 			throw new IllegalArgumentException("Invalid statue type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 }

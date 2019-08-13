@@ -1,13 +1,10 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapter;
-import org.slf4j.Logger;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
-
-import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Describes a UniProtKB entry.
@@ -72,7 +69,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 		"sequence",
 })
 public class Entry {
-	private static Logger logger = getLogger(Entry.class);
 	@XmlElement
 	private List<String> accession;
 	@XmlElement
@@ -268,8 +264,8 @@ public class Entry {
 	}
 
 	public enum Dataset {
-		sp("Swiss-Prot", "sp"),
-		tr("TrEMBL", "tr");
+		SP("Swiss-Prot", "sp"),
+		TR("TrEMBL", "tr");
 
 		private String dataset;
 		private String abbreviation;
@@ -279,22 +275,21 @@ public class Entry {
 			this.abbreviation = abbreviation;
 		}
 
-		public String getDataset() {
-			return dataset;
-		}
-
-		public String getAbbreviation() {
-			return abbreviation;
-		}
-
 		public static Dataset forDataset(String name) {
 			for (Dataset dataset : Dataset.values()) {
 				if (dataset.getDataset().equals(name)) {
 					return dataset;
 				}
 			}
-			logger.error("Invalid data set name: " + name);
-			throw new IllegalArgumentException("Invalid data set name: " + name);
+			throw new IllegalArgumentException("Invalid dataset name: " + name);
+		}
+
+		public String getDataset() {
+			return dataset;
+		}
+
+		public String getAbbreviation() {
+			return abbreviation;
 		}
 	}
 }

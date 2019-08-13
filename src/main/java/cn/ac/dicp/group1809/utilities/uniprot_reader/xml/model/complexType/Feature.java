@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -105,7 +103,6 @@ import java.util.List;
  * @since V1.0
  */
 public class Feature {
-	private static Logger logger = LoggerFactory.getLogger(Feature.class);
 	/**
 	 * Describes the original sequence in annotations that describe natural or artifical sequence variations.
 	 */
@@ -212,53 +209,49 @@ public class Feature {
 	}
 
 	public enum Type {
-		ActiveSite("active site"),
-		BindingSite("binding site"),
-		CalciumBindingRegion("calcium-binding region"),
-		Chain("chain"),
-		CoiledCoilRegion("coiled-coil region"),
-		CompositionallyBiasedRegion("compositionally biased region"),
-		CrossLink("cross-link"),
-		DisulfideBond("disulfide bond"),
-		DNABindingRegion("DNA-binding region"),
-		Domain("domain"),
-		GlycosylationSite("glycosylation site"),
-		Helix("helix"),
-		InitiatorMethionine("initiator methionine"),
-		LipidMoietyBindingRegion("lipid moiety-binding region"),
-		MetalIonBindingSite("metal ion-binding site"),
-		ModifiedResidue("modified residue"),
-		MutagenesisSite("mutagenesis site"),
-		NonConsecutiveResidues("non-consecutive residues"),
-		NonTerminalResidue("non-terminal residue"),
-		NucleotidePhosphateBindingRegion("nucleotide phosphate-binding region"),
-		Peptide("peptide"),
-		Propeptide("propeptide"),
-		RegionOfInterest("region of interest"),
-		Repeat("repeat"),
-		NonStandardAminoAcid("non-standard amino acid"),
-		SequenceConflict("sequence conflict"),
-		SequenceVariant("sequence variant"),
-		ShortSequenceMotif("short sequence motif"),
-		SignalPeptide("signal peptide"),
-		Site("site"),
-		SpliceVariant("splice variant"),
-		Strand("strand"),
-		TopologicalDomain("topological domain"),
-		TransitPeptide("transit peptide"),
-		TransmembraneRegion("transmembrane region"),
-		Turn("turn"),
-		UnsureResidue("unsure residue"),
-		ZincFingerRegion("zinc finger region"),
-		IntramembraneRegion("intramembrane region");
+		ACTIVE_SITE("active site"),
+		BINDING_SITE("binding site"),
+		CALCIUM_BINDING_REGION("calcium-binding region"),
+		CHAIN("chain"),
+		COILED_COIL_REGION("coiled-coil region"),
+		COMPOSITIONALLY_BIASED_REGION("compositionally biased region"),
+		CROSS_LINK("cross-link"),
+		DISULFIDE_BOND("disulfide bond"),
+		DNA_BINDING_REGION("DNA-binding region"),
+		DOMAIN("domain"),
+		GLYCOSYLATION_SITE("glycosylation site"),
+		HELIX("helix"),
+		INITIATOR_METHIONINE("initiator methionine"),
+		LIPID_MOIETY_BINDING_REGION("lipid moiety-binding region"),
+		METAL_ION_BINDING_SITE("metal ion-binding site"),
+		MODIFIED_RESIDUE("modified residue"),
+		MUTAGENESIS_SITE("mutagenesis site"),
+		NON_CONSECUTIVE_RESIDUES("non-consecutive residues"),
+		NON_TERMINAL_RESIDUE("non-terminal residue"),
+		NUCLEOTIDE_PHOSPHATE_BINDING_REGION("nucleotide phosphate-binding region"),
+		PEPTIDE("peptide"),
+		PROPEPTIDE("propeptide"),
+		REGION_OF_INTEREST("region of interest"),
+		REPEAT("repeat"),
+		NON_STANDARD_AMINO_ACID("non-standard amino acid"),
+		SEQUENCE_CONFLICT("sequence conflict"),
+		SEQUENCE_VARIANT("sequence variant"),
+		SHORT_SEQUENCE_MOTIF("short sequence motif"),
+		SIGNAL_PEPTIDE("signal peptide"),
+		SITE("site"),
+		SPLICE_VARIANT("splice variant"),
+		STRAND("strand"),
+		TOPOLOGICAL_DOMAIN("topological domain"),
+		TRANSIT_PEPTIDE("transit peptide"),
+		TRANSMEMBRANE_REGION("transmembrane region"),
+		TURN("turn"),
+		UNSURE_RESIDUE("unsure residue"),
+		ZINC_FINGER_REGION("zinc finger region"),
+		INTRAMEMBRANE_REGION("intramembrane region");
 		private String type;
 
 		Type(String type) {
 			this.type = type;
-		}
-
-		public String getType() {
-			return type;
 		}
 
 		public static Type forType(String s) {
@@ -267,23 +260,22 @@ public class Feature {
 					return type;
 				}
 			}
-			logger.error("Invalid feature type: " + s);
 			throw new IllegalArgumentException("Invalid feature type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 
 	public enum Status {
-		BySimilarity("by similarity"),
-		Probable("probable"),
-		Potential("potential");
+		BY_SIMILARITY("by similarity"),
+		PROBABLE("probable"),
+		POTENTIAL("potential");
 		private String status;
 
 		Status(String status) {
 			this.status = status;
-		}
-
-		public String getStatus() {
-			return status;
 		}
 
 		public static Status forStatus(String s) {
@@ -292,8 +284,11 @@ public class Feature {
 					return status;
 				}
 			}
-			logger.error("Invalid feature status: " + s);
 			throw new IllegalArgumentException("Invalid feature status: " + s);
+		}
+
+		public String getStatus() {
+			return status;
 		}
 	}
 }

@@ -3,8 +3,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Feature;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Location;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -17,8 +15,6 @@ import java.util.List;
  * @since V1.0
  */
 class FeatureReader {
-	private static Logger logger = LoggerFactory.getLogger(FeatureReader.class);
-
 	static Feature read(XMLStreamReader reader) throws XMLStreamException {
 		String name = reader.getLocalName();
 		Feature feature = new Feature();
@@ -49,6 +45,8 @@ class FeatureReader {
 				case "ref":
 					feature.setRef(attributeValue);
 					break;
+				default:
+					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -77,7 +75,6 @@ class FeatureReader {
 							feature.setLocation(location);
 							break;
 						default:
-							logger.error("Failed to read the feature element local name: " + localName);
 							throw new IllegalArgumentException("Invalid feature element local name: " + localName);
 					}
 					break;
@@ -86,6 +83,8 @@ class FeatureReader {
 					if (name.equals(localName)) {
 						break l1;
 					}
+				default:
+					break;
 			}
 		}
 		return feature;

@@ -3,8 +3,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.EvidencedString;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Protein;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.group.proteinNameGroup.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -17,8 +15,6 @@ import java.util.List;
  * @since V1.0
  */
 class ProteinReader {
-	private static Logger logger = LoggerFactory.getLogger(ProteinReader.class);
-
 	static Protein read(XMLStreamReader reader) throws XMLStreamException {
 		String name = reader.getLocalName();
 		Protein protein = new Protein();
@@ -46,7 +42,6 @@ class ProteinReader {
 							protein.setComponent(component);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -55,6 +50,8 @@ class ProteinReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return protein;
@@ -126,7 +123,6 @@ class ProteinReader {
 							protein.setComponent(component);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -135,6 +131,8 @@ class ProteinReader {
 					if ("protein".equals(endName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return proteinName;
@@ -189,7 +187,6 @@ class ProteinReader {
 							proteinName.setInnName(innName);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -198,6 +195,8 @@ class ProteinReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return proteinName;
@@ -229,7 +228,6 @@ class ProteinReader {
 							nameGroupInf.setEcNumber(ecNumber);
 							break;
 						default:
-							logger.error("Failed to recognize the element local name: " + localName);
 							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
@@ -238,6 +236,8 @@ class ProteinReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return nameGroupInf;

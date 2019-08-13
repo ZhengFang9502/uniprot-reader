@@ -2,8 +2,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Position;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamReader;
 import java.util.List;
@@ -13,8 +11,6 @@ import java.util.List;
  * @since V1.0
  */
 class PositionReader {
-	private static Logger logger = LoggerFactory.getLogger(PositionReader.class);
-
 	static Position read(XMLStreamReader reader) {
 		Position position = new Position();
 		int attributeCount = reader.getAttributeCount();
@@ -35,7 +31,6 @@ class PositionReader {
 					position.setEvidence(unmarshal);
 					break;
 				default:
-					logger.error("Failed to recognize the attribute local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;

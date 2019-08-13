@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -46,7 +44,6 @@ import java.util.List;
  * @since V1.0
  */
 public class GeneLocation {
-	private static Logger logger = LoggerFactory.getLogger(GeneLocation.class);
 	@XmlElement
 	private List<Status> name;
 
@@ -81,25 +78,21 @@ public class GeneLocation {
 	}
 
 	public enum Type {
-		Apicoplast("apicoplast"),
-		Chloroplast("chloroplast"),
-		OrganellarChromatophore("organellar chromatophore"),
-		Cyanelle("cyanelle"),
-		Hydrogenosome("hydrogenosome"),
-		Mitochondrion("mitochondrion"),
-		NonPhotosyntheticPlastid("non-photosynthetic plastid"),
-		Nucleomorph("nucleomorph"),
-		Plasmid("plasmid"),
-		Plastid("plastid");
+		APICOPLAST("apicoplast"),
+		CHLOROPLAST("chloroplast"),
+		ORGANELLAR_CHROMATOPHORE("organellar chromatophore"),
+		CYANELLE("cyanelle"),
+		HYDROGENOSOME("hydrogenosome"),
+		MITOCHONDRION("mitochondrion"),
+		NON_PHOTOSYNTHETIC_PLASTID("non-photosynthetic plastid"),
+		NUCLEOMORPH("nucleomorph"),
+		PLASMID("plasmid"),
+		PLASTID("plastid");
 
 		private String type;
 
 		Type(String type) {
 			this.type = type;
-		}
-
-		public String getType() {
-			return type;
 		}
 
 		public static Type forType(String s) {
@@ -108,8 +101,11 @@ public class GeneLocation {
 					return type;
 				}
 			}
-			logger.error("Invalid gene location type: " + s);
 			throw new IllegalArgumentException("Invalid gene location type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 }

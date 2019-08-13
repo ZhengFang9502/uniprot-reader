@@ -2,8 +2,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.group.bpcCommentGroup.BpcComment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -211,12 +209,10 @@ import java.util.List;
  * @since V1.0
  */
 public class Comment {
-	private static Logger logger = LoggerFactory.getLogger(Comment.class);
 	@XmlElement
 	private Molecule molecule;
 	@XmlElement
 	private BpcComment bpcComment;
-
 	/**
 	 * Used in 'catalytic activity' annotations.
 	 */
@@ -265,7 +261,6 @@ public class Comment {
 	 */
 	@XmlElement
 	private Disease disease;
-
 	/**
 	 * Used in 'mass spectrometry' and 'sequence caution' annotations.
 	 */
@@ -494,35 +489,35 @@ public class Comment {
 	}
 
 	public enum Type {
-		Allergen("allergen"),
-		AlternativeProducts("alternative products"),
-		Biotechnology("biotechnology"),
-		BiophysicochemicalProperties("biophysicochemical properties"),
-		CatalyticActivity("catalytic activity"),
-		Caution("caution"),
-		Cofactor("cofactor"),
-		DevelopmentalStage("developmental stage"),
-		Disease("disease"),
-		Domain("domain"),
-		DisruptionPhenotype("disruption phenotype"),
-		ActivityRegulation("activity regulation"),
-		Function("function"),
-		Induction("induction"),
-		Miscellaneous("miscellaneous"),
-		Pathway("pathway"),
-		Pharmaceutical("pharmaceutical"),
-		Polymorphism("polymorphism"),
+		ALLERGEN("allergen"),
+		ALTERNATIVE_PRODUCTS("alternative products"),
+		BIOTECHNOLOGY("biotechnology"),
+		BIOPHYSICOCHEMICAL_PROPERTIES("biophysicochemical properties"),
+		CATALYTIC_ACTIVITY("catalytic activity"),
+		CAUTION("caution"),
+		COFACTOR("cofactor"),
+		DEVELOPMENTAL_STAGE("developmental stage"),
+		DISEASE("disease"),
+		DOMAIN("domain"),
+		DISRUPTION_PHENOTYPE("disruption phenotype"),
+		ACTIVITY_REGULATION("activity regulation"),
+		FUNCTION("function"),
+		INDUCTION("induction"),
+		MISCELLANEOUS("miscellaneous"),
+		PATHWAY("pathway"),
+		PHARMACEUTICAL("pharmaceutical"),
+		POLYMORPHISM("polymorphism"),
 		PTM("PTM"),
-		RNAEditing("RNA editing"),
-		Similarity("similarity"),
-		SubcellularLocation("subcellular location"),
-		SequenceCaution("sequence caution"),
-		Subunit("subunit"),
-		TissueSpecificity("tissue specificity"),
-		ToxicDose("toxic dose"),
-		OnlineInformation("online information"),
-		MassSpectrometry("mass spectrometry"),
-		Interaction("interaction");
+		RNA_EDITING("RNA editing"),
+		SIMILARITY("similarity"),
+		SUBCELLULAR_LOCATION("subcellular location"),
+		SEQUENCE_CAUTION("sequence caution"),
+		SUBUNIT("subunit"),
+		TISSUE_SPECIFICITY("tissue specificity"),
+		TOXIC_DOSE("toxic dose"),
+		ONLINE_INFORMATION("online information"),
+		MASS_SPECTROMETRY("mass spectrometry"),
+		INTERACTION("interaction");
 		private String type;
 
 		Type(String type) {
@@ -535,7 +530,6 @@ public class Comment {
 					return type;
 				}
 			}
-			logger.error("Invalid comment type: " + s);
 			throw new IllegalArgumentException("Invalid comment type: " + s);
 		}
 

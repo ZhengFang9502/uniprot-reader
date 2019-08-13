@@ -3,8 +3,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.Gene;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.GeneName;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -17,8 +15,6 @@ import java.util.List;
  * @since V1.0
  */
 class GeneReader {
-	private static Logger logger = LoggerFactory.getLogger(GeneReader.class);
-
 	static Gene read(XMLStreamReader reader) throws XMLStreamException {
 		String name = reader.getLocalName();
 		Gene gene = new Gene();
@@ -30,14 +26,11 @@ class GeneReader {
 			switch (next) {
 				case XMLStreamReader.START_ELEMENT:
 					localName = reader.getLocalName();
-					switch (localName) {
-						case "name":
-							geneName.add(readGeneName(reader));
-							gene.setName(geneName);
-							break;
-						default:
-							logger.error("Failed to recognize the element local name: " + localName);
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+					if ("name".equals(localName)) {
+						geneName.add(readGeneName(reader));
+						gene.setName(geneName);
+					} else {
+						throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -45,6 +38,8 @@ class GeneReader {
 					if (name.equals(localName)) {
 						break loop;
 					}
+				default:
+					break;
 			}
 		}
 		return gene;
@@ -68,7 +63,6 @@ class GeneReader {
 					geneName.setType(geneNameType);
 					break;
 				default:
-					logger.error("Failed to recognize the element local name: " + attributeLocalName);
 					throw new IllegalArgumentException("Invalid element local name: " + attributeLocalName);
 			}
 			i++;

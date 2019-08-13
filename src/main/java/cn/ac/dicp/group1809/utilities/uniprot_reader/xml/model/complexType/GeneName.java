@@ -1,8 +1,6 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.IntListAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
@@ -42,7 +40,6 @@ import java.util.List;
  */
 @XmlType(name = "name")
 public class GeneName extends ValueItem {
-	private static Logger logger = LoggerFactory.getLogger(GeneName.class);
 	@XmlAttribute
 	private Type type;
 	@XmlAttribute(required = true)
@@ -66,9 +63,9 @@ public class GeneName extends ValueItem {
 	}
 
 	public enum Type {
-		Primary("primary"),
-		Synonym("synonym"),
-		OrderedLocus("ordered locus"),
+		PRIMARY("primary"),
+		SYNONYM("synonym"),
+		ORDERED_LOCUS("ordered locus"),
 		ORF("ORF");
 
 		private String type;
@@ -77,18 +74,17 @@ public class GeneName extends ValueItem {
 			this.type = type;
 		}
 
-		public String getType() {
-			return type;
-		}
-
 		public static Type forType(String s) {
 			for (Type type : Type.values()) {
 				if (type.getType().equals(s)) {
 					return type;
 				}
 			}
-			logger.error("Invalid gene name type: " + s);
 			throw new IllegalArgumentException("Invalid gene name type: " + s);
+		}
+
+		public String getType() {
+			return type;
 		}
 	}
 }

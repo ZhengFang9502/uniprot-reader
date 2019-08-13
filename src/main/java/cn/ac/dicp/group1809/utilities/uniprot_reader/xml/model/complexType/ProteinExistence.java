@@ -1,8 +1,5 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
@@ -33,7 +30,6 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @since V1.0
  */
 public class ProteinExistence {
-	private static Logger logger = LoggerFactory.getLogger(ProteinExistence.class);
 	@XmlAttribute(required = true)
 	private Type type;
 
@@ -46,11 +42,11 @@ public class ProteinExistence {
 	}
 
 	public enum Type {
-		EvidenceAtProteinLevel("evidence at protein level", 1),
-		EvidenceAtTranscriptLevel("evidence at transcript level", 2),
-		InferredFromHomology("inferred from homology", 3),
-		Predicted("predicted", 4),
-		Uncertain("uncertain", 5);
+		EVIDENCE_AT_PROTEIN_LEVEL("evidence at protein level", 1),
+		EVIDENCE_AT_TRANSCRIPT_LEVEL("evidence at transcript level", 2),
+		INFERRED_FROM_HOMOLOGY("inferred from homology", 3),
+		PREDICTED("predicted", 4),
+		UNCERTAIN("uncertain", 5);
 
 		private String type;
 		private int number;
@@ -60,22 +56,21 @@ public class ProteinExistence {
 			this.number = number;
 		}
 
-		public String getType() {
-			return type;
-		}
-
-		public int getNumber() {
-			return number;
-		}
-
 		public static Type forType(String s) {
 			for (Type type : Type.values()) {
 				if (type.getType().equals(s)) {
 					return type;
 				}
 			}
-			logger.error("Invalid protein existence type: " + s);
 			throw new IllegalArgumentException("Invalid protein existence type: " + s);
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public int getNumber() {
+			return number;
 		}
 	}
 }

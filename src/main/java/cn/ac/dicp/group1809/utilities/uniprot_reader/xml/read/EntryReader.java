@@ -2,8 +2,6 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -16,8 +14,6 @@ import java.util.List;
  * @since V1.0
  */
 class EntryReader {
-	private static Logger logger = LoggerFactory.getLogger(EntryReader.class);
-
 	private static DateAdapter dateAdapter = new DateAdapter();
 
 	static Entry read(XMLStreamReader reader) throws XMLStreamException {
@@ -45,8 +41,7 @@ class EntryReader {
 					entry.setVersion(Integer.valueOf(attributeValue));
 					break;
 				default:
-					logger.error("Failed to read entry attribute name: " + attributeLocalName);
-					throw new IllegalArgumentException("Failed to read entry attribute name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -134,6 +129,8 @@ class EntryReader {
 							Sequence sequence = SequenceReader.read(reader);
 							entry.setSequence(sequence);
 							break;
+						default:
+							throw new IllegalArgumentException("Invalid element local name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -141,6 +138,8 @@ class EntryReader {
 					if (name.equals(localName)) {
 						break l1;
 					}
+				default:
+					break;
 			}
 		}
 		return entry;
