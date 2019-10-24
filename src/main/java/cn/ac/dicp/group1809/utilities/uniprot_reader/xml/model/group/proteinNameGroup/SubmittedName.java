@@ -22,6 +22,6 @@ public class SubmittedName extends NameGroup implements NameGroupInf {
 
 	@Override
 	public void setShortName(List<EvidencedString> shortName) {
-		throw new RuntimeException("Can not set short name for submitted name.");
+		throw new RuntimeException("Can Not Set Short Name for Submitted Name.");
 	}
 }

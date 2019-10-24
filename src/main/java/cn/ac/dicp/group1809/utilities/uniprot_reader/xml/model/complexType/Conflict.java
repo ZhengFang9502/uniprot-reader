@@ -62,7 +62,7 @@ public class Conflict {
 					return resource;
 				}
 			}
-			throw new IllegalArgumentException("Invalid sequence resource: " + s);
+			throw new IllegalArgumentException("Invalid Sequence Resource: " + s);
 		}
 
 		public String getResource() {
@@ -89,7 +89,7 @@ public class Conflict {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid conflict type: " + s);
+			throw new IllegalArgumentException("Invalid Conflict Type: " + s);
 		}
 
 		public String getType() {

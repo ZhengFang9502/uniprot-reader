@@ -62,7 +62,7 @@ public class ProteinExistence {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid protein existence type: " + s);
+			throw new IllegalArgumentException("Invalid Protein Existence Type: " + s);
 		}
 
 		public String getType() {

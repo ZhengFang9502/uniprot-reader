@@ -281,7 +281,7 @@ public class Entry {
 					return dataset;
 				}
 			}
-			throw new IllegalArgumentException("Invalid dataset name: " + name);
+			throw new IllegalArgumentException("Invalid Dataset Name: " + name);
 		}
 
 		public String getDataset() {

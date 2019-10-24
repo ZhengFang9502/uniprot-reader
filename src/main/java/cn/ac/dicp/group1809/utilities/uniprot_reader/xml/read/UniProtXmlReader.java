@@ -29,9 +29,9 @@ public class UniProtXmlReader {
 	}
 
 	public Uniprot read(String path) throws IOException, XMLStreamException {
-		LOGGER.debug("Reading UniProt XML database: {}.", path);
+		LOGGER.debug("Reading uniProt xml database: {}.", path);
 		if (!path.endsWith("xml")) {
-			throw new IllegalArgumentException("Invalid UniProt XML file format: " + path);
+			throw new IllegalArgumentException("Invalid UniProt XML File Format: " + path);
 		}
 		Uniprot uniprot = new Uniprot();
 		List<Entry> entry = new ArrayList<>();
@@ -70,7 +70,7 @@ public class UniProtXmlReader {
 		reader.close();
 		inputStreamReader.close();
 		inputStream.close();
-		LOGGER.debug("Finish reading UniProt XML database file: {}, and get {} enties.", path, entry.size());
+		LOGGER.debug("Finish reading uniProt xml database file: {}, and get {} enties.", path, entry.size());
 		return uniprot;
 	}
 

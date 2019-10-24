@@ -23,10 +23,10 @@ class LocationReader {
 				if ("sequence".equals(attributeLocalName)) {
 					location.setSequence(attributeValue);
 				} else {
-					throw new IllegalArgumentException("Invalid local attribute name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Local Attribute Name: " + attributeLocalName);
 				}
 			} else {
-				throw new IllegalArgumentException("More than 1 attribute in location element: " + name);
+				throw new IllegalArgumentException("More Than 1 Attribute in Location Element: " + name);
 			}
 		}
 		String localName;
@@ -50,7 +50,7 @@ class LocationReader {
 							location.setPosition(position);
 							break;
 						default:
-							throw new IllegalArgumentException("Unable to read start element local name :" + localName);
+							throw new IllegalArgumentException("Unable to Read Start Element Local Name :" + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:

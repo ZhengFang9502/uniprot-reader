@@ -50,7 +50,7 @@ class CommentReader {
 					comment.setEvidence(unmarshal);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -138,7 +138,7 @@ class CommentReader {
 								comment.setEvent(event);
 								break;
 							}
-							throw new IllegalArgumentException("Event size greater than 4!");
+							throw new IllegalArgumentException("Event Size Greater Than 4!");
 						case "isoform":
 							isoform.add(readIsoform(reader));
 							comment.setIsoform(isoform);
@@ -149,7 +149,7 @@ class CommentReader {
 								comment.setInteractant(interactant);
 								break;
 							}
-							throw new IllegalArgumentException("Interactant size greater than 2!");
+							throw new IllegalArgumentException("Interactant Size Greater Than 2!");
 						case "organismsDiffer":
 							comment.setOrganismsDiffer(reader.getElementText().equals("true"));
 							break;
@@ -169,7 +169,7 @@ class CommentReader {
 							comment.setText(text);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -205,7 +205,7 @@ class CommentReader {
 							absorption.setText(text);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -247,7 +247,7 @@ class CommentReader {
 							kinetics.setText(text);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -276,7 +276,7 @@ class CommentReader {
 						texts.add(EvidencedStringReader.read(reader));
 						text.setText(texts);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -306,7 +306,7 @@ class CommentReader {
 				}
 				reaction.setEvidence(evidence);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -328,7 +328,7 @@ class CommentReader {
 							dbReference.add(dbRef);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -365,7 +365,7 @@ class CommentReader {
 					physiologicalReaction.setDirection(direction);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 
 			}
 			i++;
@@ -382,7 +382,7 @@ class CommentReader {
 						DBReference dbRef = DBReferenceReader.read(reader);
 						dbReference.add(dbRef);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -409,7 +409,7 @@ class CommentReader {
 				List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
 				cofactor.setEvidence(unmarshal);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -429,7 +429,7 @@ class CommentReader {
 							cofactor.setDbReference(dbReference);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -471,7 +471,7 @@ class CommentReader {
 							subcellularLocation.setOrientation(orientation);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -503,7 +503,7 @@ class CommentReader {
 					conflict.setRef(attributeValue);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -519,7 +519,7 @@ class CommentReader {
 						Conflict.Sequence sequence = readConflictSequence(reader);
 						conflict.setSequence(sequence);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -553,7 +553,7 @@ class CommentReader {
 					sequence.setVersion(Integer.valueOf(attributeValue));
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -570,7 +570,7 @@ class CommentReader {
 			if ("uri".equals(attributeLocalName)) {
 				link.setUri(new URIAdapter().unmarshal(attributeValue));
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -588,7 +588,7 @@ class CommentReader {
 				Event.Type t = Event.Type.forType(attributeValue);
 				event.setType(t);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -627,7 +627,7 @@ class CommentReader {
 							isoform.setText(text);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -658,7 +658,7 @@ class CommentReader {
 					sequence.setRef(attributeValue);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -676,7 +676,7 @@ class CommentReader {
 				List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
 				name.setEvidence(unmarshal);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -695,7 +695,7 @@ class CommentReader {
 			if ("intactId".equals(attributeLocalName)) {
 				interactant.setIntactId(attributeValue);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -716,7 +716,7 @@ class CommentReader {
 							interactant.setLabel(label);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -742,7 +742,7 @@ class CommentReader {
 				String attributeValue = reader.getAttributeValue(i);
 				disease.setId(attributeValue);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -771,7 +771,7 @@ class CommentReader {
 							disease.setDbReference(dbReference);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:

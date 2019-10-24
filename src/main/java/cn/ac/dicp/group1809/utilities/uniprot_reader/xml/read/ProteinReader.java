@@ -42,7 +42,7 @@ class ProteinReader {
 							protein.setComponent(component);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -123,7 +123,7 @@ class ProteinReader {
 							protein.setComponent(component);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -187,7 +187,7 @@ class ProteinReader {
 							proteinName.setInnName(innName);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -228,7 +228,7 @@ class ProteinReader {
 							nameGroupInf.setEcNumber(ecNumber);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:

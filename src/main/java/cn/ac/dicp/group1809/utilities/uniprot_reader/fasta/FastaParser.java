@@ -26,7 +26,7 @@ public class FastaParser {
 	public HashMap<String, Protein> read(String path) throws IOException {
 		LOGGER.debug("Reading fasta file: {}.", path);
 		if (!path.endsWith(".fasta")) {
-			throw new IllegalArgumentException("Invalid fasta file format: " + path);
+			throw new IllegalArgumentException("Invalid Fasta File Format: " + path);
 		}
 		HashMap<String, Protein> proteinDatabase = new HashMap<>();
 		File file = new File(path);
@@ -63,7 +63,7 @@ public class FastaParser {
 	private void addProtein(HashMap<String, Protein> proteinDatabase, Protein protein) {
 		String accession = protein.getAccession();
 		if (proteinDatabase.containsKey(accession)) {
-			throw new IllegalArgumentException("Duplicate accession number in the fasta file: " + accession);
+			throw new IllegalArgumentException("Duplicate Accession Number in the Fasta File: " + accession);
 		}
 		proteinDatabase.put(accession, protein);
 	}
@@ -96,7 +96,7 @@ public class FastaParser {
 					protein.setSequenceVersion(Integer.valueOf(split[1]));
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid description property: " + split[0]);
+					throw new IllegalArgumentException("Invalid Description Property: " + split[0]);
 			}
 			description = matcher.replaceFirst(end);
 			matcher = PROPERTY_PATTERN.matcher(description);

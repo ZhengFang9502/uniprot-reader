@@ -83,7 +83,7 @@ public class Position {
 					return status;
 				}
 			}
-			throw new IllegalArgumentException("Invalid position status: " + s);
+			throw new IllegalArgumentException("Invalid Position Status: " + s);
 		}
 
 		public String getStatus() {

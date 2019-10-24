@@ -46,7 +46,7 @@ class FeatureReader {
 					feature.setRef(attributeValue);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -75,7 +75,7 @@ class FeatureReader {
 							feature.setLocation(location);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid feature element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Feature Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:

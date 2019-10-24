@@ -69,7 +69,7 @@ public class EvidencedString extends ValueItem {
 					return status;
 				}
 			}
-			throw new IllegalArgumentException("Invalid evidenced string status: " + s);
+			throw new IllegalArgumentException("Invalid Evidenced String Status: " + s);
 		}
 
 		public String getStatus() {

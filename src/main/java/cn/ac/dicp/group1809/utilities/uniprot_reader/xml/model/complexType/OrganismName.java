@@ -64,7 +64,7 @@ public class OrganismName extends ValueItem {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid organism name type: " + s);
+			throw new IllegalArgumentException("Invalid Organism Name Type: " + s);
 		}
 
 		public String getType() {

@@ -108,7 +108,7 @@ public class Isoform {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid isoform type: " + s);
+			throw new IllegalArgumentException("Invalid Isoform Type: " + s);
 		}
 
 		public String getType() {

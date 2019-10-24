@@ -30,7 +30,7 @@ class EvidenceReader {
 					evidence.setKey(Integer.valueOf(attributeValue));
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -52,7 +52,7 @@ class EvidenceReader {
 							evidence.setImportedFrom(importedFrom);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -78,7 +78,7 @@ class EvidenceReader {
 			if ("ref".equals(attributeLocalName)) {
 				source.setRef(Integer.valueOf(attributeValue));
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -93,7 +93,7 @@ class EvidenceReader {
 						DBReference dbReference = DBReferenceReader.read(reader);
 						source.setDbReference(dbReference);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -122,7 +122,7 @@ class EvidenceReader {
 						DBReference dbReference = DBReferenceReader.read(reader);
 						importedFrom.setDbReference(dbReference);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:

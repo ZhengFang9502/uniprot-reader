@@ -30,7 +30,7 @@ class GeneReader {
 						geneName.add(readGeneName(reader));
 						gene.setName(geneName);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -63,7 +63,7 @@ class GeneReader {
 					geneName.setType(geneNameType);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid element local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Element Local Name: " + attributeLocalName);
 			}
 			i++;
 		}

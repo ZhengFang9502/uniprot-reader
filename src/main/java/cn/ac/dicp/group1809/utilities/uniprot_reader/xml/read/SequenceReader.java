@@ -45,7 +45,7 @@ class SequenceReader {
 					sequence.setFragment(fragment);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName + "\t" + attributeValue);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName + "\t" + attributeValue);
 			}
 			i++;
 		}

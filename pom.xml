@@ -44,4 +44,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <name>Release Deploy</name>
+            <url>http://192.168.1.48:8081/repository/ZhengFang/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot</id>
+            <name>Snapshot Deploy</name>
+            <url>http://192.168.1.48:8081/repository/ZhengFang/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

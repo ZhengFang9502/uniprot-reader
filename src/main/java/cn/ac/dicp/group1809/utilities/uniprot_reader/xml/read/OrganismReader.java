@@ -28,7 +28,7 @@ class OrganismReader {
 				List<Integer> unmarshal = new IntListAdapter().unmarshal(attributeValue);
 				organism.setEvidence(unmarshal);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -56,7 +56,7 @@ class OrganismReader {
 							organism.setLineage(lineage);
 							break;
 						default:
-							throw new IllegalArgumentException("Invalid element local name: " + localName);
+							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -83,7 +83,7 @@ class OrganismReader {
 				OrganismName.Type organismNameType = OrganismName.Type.forType(attributeValue);
 				organismName.setType(organismNameType);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -107,7 +107,7 @@ class OrganismReader {
 						taxon.setTaxon(reader.getElementText());
 						lineage.add(taxon);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:

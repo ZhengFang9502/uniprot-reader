@@ -101,7 +101,7 @@ public class GeneLocation {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid gene location type: " + s);
+			throw new IllegalArgumentException("Invalid Gene Location Type: " + s);
 		}
 
 		public String getType() {

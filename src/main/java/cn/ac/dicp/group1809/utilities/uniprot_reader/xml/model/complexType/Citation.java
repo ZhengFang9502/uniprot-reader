@@ -387,7 +387,7 @@ public class Citation {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid citation type: " + s);
+			throw new IllegalArgumentException("Invalid Citation Type: " + s);
 		}
 
 		public String getType() {

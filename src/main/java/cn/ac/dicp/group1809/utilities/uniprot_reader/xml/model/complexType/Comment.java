@@ -530,7 +530,7 @@ public class Comment {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid comment type: " + s);
+			throw new IllegalArgumentException("Invalid Comment Type: " + s);
 		}
 
 		public String getType() {

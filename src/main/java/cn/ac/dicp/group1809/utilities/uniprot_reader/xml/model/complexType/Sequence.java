@@ -121,7 +121,7 @@ public class Sequence extends ValueItem {
 					return fragment;
 				}
 			}
-			throw new IllegalArgumentException("Invalid fragment: " + s);
+			throw new IllegalArgumentException("Invalid Fragment: " + s);
 		}
 
 		public String getFragment() {

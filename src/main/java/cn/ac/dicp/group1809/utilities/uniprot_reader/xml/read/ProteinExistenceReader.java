@@ -20,7 +20,7 @@ class ProteinExistenceReader {
 				ProteinExistence.Type t = ProteinExistence.Type.forType(attributeValue);
 				proteinExistence.setType(t);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}

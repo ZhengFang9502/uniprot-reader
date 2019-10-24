@@ -80,7 +80,7 @@ public class GeneName extends ValueItem {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid gene name type: " + s);
+			throw new IllegalArgumentException("Invalid Gene Name Type: " + s);
 		}
 
 		public String getType() {

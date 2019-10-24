@@ -55,7 +55,7 @@ public class Event {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid event type: " + s);
+			throw new IllegalArgumentException("Invalid Event Type: " + s);
 		}
 
 		public String getType() {

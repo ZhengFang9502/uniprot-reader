@@ -55,7 +55,7 @@ public class Status extends ValueItem {
 					return type;
 				}
 			}
-			throw new IllegalArgumentException("Invalid statue type: " + s);
+			throw new IllegalArgumentException("Invalid Statue Type: " + s);
 		}
 
 		public String getType() {

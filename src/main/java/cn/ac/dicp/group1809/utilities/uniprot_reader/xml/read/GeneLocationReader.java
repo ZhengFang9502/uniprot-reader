@@ -33,7 +33,7 @@ class GeneLocationReader {
 					geneLocation.setEvidence(unmarshal);
 					break;
 				default:
-					throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+					throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
@@ -49,7 +49,7 @@ class GeneLocationReader {
 						statuses.add(readStatus(reader));
 						geneLocation.setName(statuses);
 					} else {
-						throw new IllegalArgumentException("Invalid element local name: " + localName);
+						throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
@@ -75,7 +75,7 @@ class GeneLocationReader {
 				Status.Type type = Status.Type.forType(attributeValue);
 				status.setStatus(type);
 			} else {
-				throw new IllegalArgumentException("Invalid attribute local name: " + attributeLocalName);
+				throw new IllegalArgumentException("Invalid Attribute Local Name: " + attributeLocalName);
 			}
 			i++;
 		}
