@@ -44,10 +44,16 @@ public class FastaParser {
 				protein = new Protein();
 				String[] split = s.split("\\|");
 				String database = split[0].replace(">", "");
-				protein.setDatabase(database);
-				protein.setAccession(split[1]);
-				setProteinAttributes(protein, split[2]);
-				content = new StringBuilder();
+				if (database.startsWith("CON_")) {
+					protein.setAccession(database);
+					protein.setEntryName(split[1]);
+					content = new StringBuilder();
+				} else {
+					protein.setDatabase(database);
+					protein.setAccession(split[1]);
+					setProteinAttributes(protein, split[2]);
+					content = new StringBuilder();
+				}
 			} else {
 				String lineSeperator = "\r\n";
 				s = s.replaceAll(lineSeperator, "");
@@ -63,7 +69,8 @@ public class FastaParser {
 	private void addProtein(HashMap<String, Protein> proteinDatabase, Protein protein) {
 		String accession = protein.getAccession();
 		if (proteinDatabase.containsKey(accession)) {
-			throw new IllegalArgumentException("Duplicate Accession Number in the Fasta File: " + accession);
+			LOGGER.warn("Duplicate Accession Number in the Fasta File: {}", accession);
+//			throw new IllegalArgumentException("Duplicate Accession Number in the Fasta File: " + accession);
 		}
 		proteinDatabase.put(accession, protein);
 	}
