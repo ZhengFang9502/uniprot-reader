@@ -2,6 +2,8 @@ package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.read;
 
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapter;
 import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -14,6 +16,7 @@ import java.util.List;
  * @since V1.0
  */
 class EntryReader {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EntryReader.class);
 	private static DateAdapter dateAdapter = new DateAdapter();
 
 	static Entry read(XMLStreamReader reader) throws XMLStreamException {
@@ -65,6 +68,9 @@ class EntryReader {
 					switch (localName) {
 						case "accession":
 							String text = reader.getElementText();
+							if (accession.size() == 0) {
+								LOGGER.debug("Reading Accession: {}", text);
+							}
 							accession.add(text);
 							entry.setAccession(accession);
 							break;
@@ -85,6 +91,11 @@ class EntryReader {
 						case "organism":
 							Organism organism = OrganismReader.read(reader);
 							entry.setOrganism(organism);
+							break;
+						case "organismHost":
+							Organism org = OrganismReader.read(reader);
+							List<Organism> organismHost = entry.getOrganismHost();
+							organismHost.add(org);
 							break;
 						case "geneLocation":
 							GeneLocation geneLocation1 = GeneLocationReader.read(reader);

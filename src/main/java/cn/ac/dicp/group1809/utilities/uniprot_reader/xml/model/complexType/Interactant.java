@@ -1,7 +1,5 @@
 package cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.complexType;
 
-import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.group.InteractantGroup;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -30,6 +28,8 @@ public class Interactant {
 	private String id;
 	@XmlElement
 	private String label;
+	@XmlElement
+	private DBReference dbReference;
 
 	@XmlAttribute(required = true)
 	private String intactId;
@@ -48,6 +48,14 @@ public class Interactant {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public DBReference getDbReference() {
+		return dbReference;
+	}
+
+	public void setDbReference(DBReference dbReference) {
+		this.dbReference = dbReference;
 	}
 
 	public String getIntactId() {

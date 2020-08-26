@@ -715,6 +715,10 @@ class CommentReader {
 							String label = reader.getElementText();
 							interactant.setLabel(label);
 							break;
+						case "dbReference":
+							DBReference dbReference = DBReferenceReader.read(reader);
+							interactant.setDbReference(dbReference);
+							break;
 						default:
 							throw new IllegalArgumentException("Invalid Element Local Name: " + localName);
 					}

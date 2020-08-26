@@ -500,6 +500,7 @@ public class Comment {
 		DISEASE("disease"),
 		DOMAIN("domain"),
 		DISRUPTION_PHENOTYPE("disruption phenotype"),
+		ENZYME_REGULATION("enzyme regulation"),
 		ACTIVITY_REGULATION("activity regulation"),
 		FUNCTION("function"),
 		INDUCTION("induction"),

@@ -4,6 +4,7 @@ import cn.ac.dicp.group1809.utilities.uniprot_reader.xml.model.adapter.DateAdapt
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -152,7 +153,10 @@ public class Entry {
 	}
 
 	public List<Organism> getOrganismHost() {
-		return organismHost;
+		if (this.organismHost==null){
+			this.organismHost=new ArrayList<>();
+		}
+		return this.organismHost;
 	}
 
 	public void setOrganismHost(List<Organism> organismHost) {

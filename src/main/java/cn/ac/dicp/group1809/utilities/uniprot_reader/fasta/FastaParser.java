@@ -43,13 +43,18 @@ public class FastaParser {
 				}
 				protein = new Protein();
 				String[] split = s.split("\\|");
-				String database = split[0].replace(">", "");
-				if (database.startsWith("CON_")) {
-					protein.setAccession(database);
-					protein.setEntryName(split[1]);
+				String firstPart = split[0].replace(">", "");
+				if (firstPart.startsWith("CON_")) {
+					protein.setAccession(firstPart);
+					StringBuilder entryName = new StringBuilder();
+					entryName.append(split[1]);
+					for (int i = 2; i < split.length; i++) {
+						entryName.append("|").append(split[i]);
+					}
+					protein.setEntryName(entryName.toString());
 					content = new StringBuilder();
 				} else {
-					protein.setDatabase(database);
+					protein.setDatabase(firstPart);
 					protein.setAccession(split[1]);
 					setProteinAttributes(protein, split[2]);
 					content = new StringBuilder();
@@ -108,9 +113,13 @@ public class FastaParser {
 			description = matcher.replaceFirst(end);
 			matcher = PROPERTY_PATTERN.matcher(description);
 		}
-		String[] split = description.split(" ");
-		protein.setEntryName(split[0].trim());
-		protein.setProteinName(description.replace(split[0], "").trim());
+		if (protein.getAccession().startsWith("CON_")){
+			protein.setEntryName(description);
+		}else {
+			String[] split = description.split(" ");
+			protein.setEntryName(split[0].trim());
+			protein.setProteinName(description.replace(split[0], "").trim());
+		}
 	}
 
 	public void write(Map<String, Protein> proteinMap, String outputPath) throws IOException {
