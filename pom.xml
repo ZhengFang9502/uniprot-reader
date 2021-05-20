@@ -6,7 +6,7 @@
 
 	<groupId>cn.ac.dicp.group1809.utilities</groupId>
 	<artifactId>uniprot-reader</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.0</version>
 	<description>For uniprot(https://www.uniprot.org/) database reading.</description>
 
 	<developers>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>cn.ac.dicp.group1809.utilities</groupId>
 			<artifactId>proteomics-framework</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
